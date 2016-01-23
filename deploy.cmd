@@ -120,7 +120,7 @@ IF NOT DEFINED WYAM_CMD (
   ::call move %WYAM_SOURCE%\Wyam\bin\Debug\* %WYAM_PATH%
   ::IF !ERRORLEVEL! NEQ 0 goto error
 
-  call powershell deploy.ps1
+  Write-Hoste Blub
 
 
   SET WYAM_CMD=%WYAM_PATH%\wyam.exe
