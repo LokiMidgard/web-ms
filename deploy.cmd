@@ -107,50 +107,6 @@ IF NOT DEFINED WYAM_CMD (
   )
 
   
-  echo          dP                            
-  echo          88                            
-  echo .d8888b. 88 .d8888b. 88d888b. .d8888b. 
-  echo 88'  `"" 88 88'  `88 88'  `88 88ooood8 
-  echo 88.  ... 88 88.  .88 88    88 88.  ... 
-  echo `88888P' dP `88888P' dP    dP `88888P' 
-  echo ooooooooooooooooooooooooooooooooooooooo
-  echo
-  
-  call git clone https://github.com/Wyamio/Wyam.git %WYAM_GIT%
-  IF !ERRORLEVEL! NEQ 0 goto error
-
-
-
-  echo                                       dP                                   dP                              
-  echo                                       88                                   88                              
-  echo 88d888b. dP    dP .d8888b. .d8888b. d8888P    88d888b. .d8888b. .d8888b. d8888P .d8888b. 88d888b. .d8888b. 
-  echo 88'  `88 88    88 88'  `88 88ooood8   88      88'  `88 88ooood8 Y8ooooo.   88   88'  `88 88'  `88 88ooood8 
-  echo 88    88 88.  .88 88.  .88 88.  ...   88      88       88.  ...       88   88   88.  .88 88       88.  ... 
-  echo dP    dP `88888P' `8888P88 `88888P'   dP      dP       `88888P' `88888P'   dP   `88888P' dP       `88888P' 
-  echo ooooooooooooooooooo~~~~.88~oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-  echo                    d8888P                                                                                  
-
-  call nuget restore %WYAM_SOURCE%
-  IF !ERRORLEVEL! NEQ 0 goto error
-
-  echo dP                oo dP       dP                                            
-  echo 88                   88       88                                            
-  echo 88d888b. dP    dP dP 88 .d888b88    dP  dP  dP dP    dP .d8888b. 88d8b.d8b. 
-  echo 88'  `88 88    88 88 88 88'  `88    88  88  88 88    88 88'  `88 88'`88'`88 
-  echo 88.  .88 88.  .88 88 88 88.  .88    88.88b.88' 88.  .88 88.  .88 88  88  88 
-  echo 88Y8888' `88888P' dP dP `88888P8    8888P Y8P  `8888P88 `88888P8 dP  dP  dP 
-  echo oooooooooooooooooooooooooooooooooooooooooooooooo~~~~.88~oooooooooooooooooooo
-  echo                                                 d8888P                      
- 
-  call msbuild %WYAM_SOURCE%\wyam.sln
-  IF !ERRORLEVEL! NEQ 0 goto error
-
-  IF NOT EXIST %WYAM_PATH% (
-    echo Creating Wyam Folder
-    call mkdir %WYAM_PATH%
-    IF !ERRORLEVEL! NEQ 0 goto error
-  )
-
 
                                                                                  
                                                                                  
@@ -161,20 +117,10 @@ IF NOT DEFINED WYAM_CMD (
   echo ooooooooooooooooooooooooooooooooooooooooooooooooooooo~~~~.88~oooooooooooooooooooo
   echo                                                      d8888P                      
 
-  call move %WYAM_SOURCE%\Wyam\bin\Debug\* %WYAM_PATH%
-  IF !ERRORLEVEL! NEQ 0 goto error
+  ::call move %WYAM_SOURCE%\Wyam\bin\Debug\* %WYAM_PATH%
+  ::IF !ERRORLEVEL! NEQ 0 goto error
 
-  echo       dP          dP            dP                                                                     
-  echo       88          88            88                                                                     
-  echo .d888b88 .d8888b. 88 .d8888b. d8888P .d8888b.    .d8888b. .d8888b. dP    dP 88d888b. .d8888b. .d8888b. 
-  echo 88'  `88 88ooood8 88 88ooood8   88   88ooood8    Y8ooooo. 88'  `88 88    88 88'  `88 88'  `"" 88ooood8 
-  echo 88.  .88 88.  ... 88 88.  ...   88   88.  ...          88 88.  .88 88.  .88 88       88.  ... 88.  ... 
-  echo `88888P8 `88888P' dP `88888P'   dP   `88888P'    `88888P' `88888P' `88888P' dP       `88888P' `88888P' 
-  echo ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-  echo                                                                                                        
-    
-  call del /F /S /Q %WYAM_SOURCE%
-  IF !ERRORLEVEL! NEQ 0 goto error
+  call powershell deploy.ps1
 
 
   SET WYAM_CMD=%WYAM_PATH%\wyam.exe
