@@ -1,0 +1,64 @@
+// Setup code
+
+===
+
+---
+
+
+
+
+Pipelines.Add("inputRender",
+	ReadFiles(@"render\*.md"),
+    ConcatBranch(
+        ReadFiles(@"render\*.cshtml")
+    ),
+	FrontMatter(Yaml()),
+    Meta("WritePath",  (@doc, @ctx)=> 
+	{
+		var path = ((string)@doc["RelativeFilePath"]).Split('\\','/').Skip(1).ToArray();
+		var last = path[path.Length-1];
+		if(Path.GetExtension(last) == ".md" || Path.GetExtension(last) == ".cshtml")
+    		path[path.Length-1] = last = Path.ChangeExtension(last, ".html");
+		return Path.Combine(path);
+	}),
+	Meta("Url",  (@doc, @ctx)=> 
+	{
+		var url = (string)@doc["WritePath"];
+		if(Path.GetFileName(url) == "index.html")
+			url = Path.GetDirectoryName(url);
+		url = @"\"+url;
+		return url;
+	})
+    
+);
+
+
+
+
+
+
+Pipelines.Add("input",
+    Documents("inputRender")
+);
+
+Pipelines.Add("MainMenue",
+	Documents("input").Where( (@doc, @ctx)=> 
+	{
+		return @doc.Metadata.ContainsKey("MainMenueOrder");
+	}),
+	OrderBy(@doc["MainMenueOrder"])	
+);
+
+Pipelines.Add("AddMetadata",
+	Documents("input"), 
+    If(@doc["SourceFileExt"].ToString()==".md",
+        Markdown()
+    ),
+    If(@doc["SourceFileExt"].ToString()==".md"||@doc["SourceFileExt"].ToString()==".cshtml",
+        Razor()
+    )
+);
+Pipelines.Add("writer",
+    Documents("AddMetadata"),
+    WriteFiles()
+);
