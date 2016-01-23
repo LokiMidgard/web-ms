@@ -65,9 +65,14 @@ IF NOT DEFINED WYAM_PATH (
   SET WYAM_PATH=%BIN_PATH%\Wyam
 )
 
-IF NOT DEFINED WYAM_SOURCE (
-  SET WYAM_SOURCE=%BIN_PATH%\WyamSource
+IF NOT DEFINED WYAM_GIT (
+  SET WYAM_GIT=%BIN_PATH%\WyamSource
 )
+
+IF NOT DEFINED WYAM_SOURCE (
+  SET WYAM_SOURCE=%WYAM_GIT%\src
+)
+
 
 IF NOT DEFINED UPDATE_PATH (
   SET UPDATE_PATH=%BIN_PATH%\update
@@ -111,8 +116,9 @@ IF NOT DEFINED WYAM_CMD (
   echo ooooooooooooooooooooooooooooooooooooooo
   echo
   
-  call git clone https://github.com/Wyamio/Wyam.git %WYAM_SOURCE%
+  call git clone https://github.com/Wyamio/Wyam.git %WYAM_GIT%
   IF !ERRORLEVEL! NEQ 0 goto error
+
 
 
   echo                                       dP                                   dP                              
