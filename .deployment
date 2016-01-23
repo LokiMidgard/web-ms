@@ -1,2 +1,2 @@
 [config]
-command = deploy.ps1
+command = deploy.cmd
