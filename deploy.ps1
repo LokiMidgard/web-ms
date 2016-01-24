@@ -9,11 +9,12 @@ echo $call
 try{
     $tempFile2 = [IO.Path]::GetTempFileName()
     $tempFile = ("$tempFile2.zip")
-    Invoke-WebRequest $call -OutFile $tempFile
+    $webClient.DownloadFile( $call , $tempFile)
     Remove-Item ".\wyam" -ErrorAction Ignore -Recurse
     Expand-Archive -Path $tempFile -DestinationPath ".\Wyam"
+    Write-Host 'Succsess'
 }
 finally{
-    Remove-Item $tempFile
+    Remove-Item $tempFile2
     Remove-Item $tempFile
 }
