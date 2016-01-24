@@ -1,1 +1,3 @@
-powershell .\deploy.ps1
+
+
+powershell -ExecutionPolicy RemoteSigned .\deploy.ps1
