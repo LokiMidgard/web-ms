@@ -1,8 +1,8 @@
-$download = Invoke-WebRequest "https://raw.githubusercontent.com/Wyamio/Wyam/master/RELEASE"
+$webClient = new-object net.webclient
 
-[string] $version = $download.RawContent
-$match=[Regex]::Match($version,"\r\n\r\n(?<version>[^\n\r]+)",[System.Text.RegularExpressions.RegexOptions]::Singleline );
-$version =$match.Groups["version"].Value;
+$download = $webClient.DownloadString("https://raw.githubusercontent.com/Wyamio/Wyam/master/RELEASE")
+
+[string] $version = $download
 $version = $version.Trim([Char]0).Trim(([char]10));
 $call = ("https://github.com/Wyamio/Wyam/releases/download/$version/Wyam-$version.zip")
 echo $call
