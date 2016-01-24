@@ -1,4 +1,6 @@
-[string] $version = (curl https://raw.githubusercontent.com/Wyamio/Wyam/master/RELEASE).RawContent
+$download = Invoke-WebRequest "https://raw.githubusercontent.com/Wyamio/Wyam/master/RELEASE"
+
+[string] $version = $download.RawContent
 $match=[Regex]::Match($version,"\r\n\r\n(?<version>[^\n\r]+)",[System.Text.RegularExpressions.RegexOptions]::Singleline );
 $version =$match.Groups["version"].Value;
 $version = $version.Trim([Char]0).Trim(([char]10));
