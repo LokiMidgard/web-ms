@@ -10,8 +10,8 @@ try{
     $tempFile2 = [IO.Path]::GetTempFileName()
     $tempFile = ("$tempFile2.zip")
     $webClient.DownloadFile( $call , $tempFile)
-    Remove-Item ".\wyam" -ErrorAction Ignore -Recurse
-    Expand-Archive -Path $tempFile -DestinationPath ".\Wyam"
+    Remove-Item $env:WYAM_PATH -ErrorAction Ignore -Recurse
+    unzip $tempFile -d $env:WYAM_PATH
     Write-Host 'Succsess'
 }
 finally{
