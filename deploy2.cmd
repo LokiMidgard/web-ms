@@ -1,1 +1,1 @@
-powershell deploy.ps1
+powershell .\deploy.ps1
