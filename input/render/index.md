@@ -1,4 +1,7 @@
 Title: Home
 MainMenueOrder: 1
 ---
-Willkommen auf dieser Seite.
+Wenn sie Informationen über die einzelnen Peojekte wünchen, schauen sie bitte auf der entsprechenden Projektseite nach.
+
+## Proektseiten
+* [Graphviz for Office](http://https://github.com/LokiMidgard/GrapvizForOffice)
