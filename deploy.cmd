@@ -65,64 +65,29 @@ IF NOT DEFINED WYAM_PATH (
   SET WYAM_PATH=%BIN_PATH%\Wyam
 )
 
-IF NOT DEFINED WYAM_GIT (
-  SET WYAM_GIT=%BIN_PATH%\WyamSource
-)
-
-IF NOT DEFINED WYAM_SOURCE (
-  SET WYAM_SOURCE=%WYAM_GIT%\src
-)
-
-
-IF NOT DEFINED UPDATE_PATH (
-  SET UPDATE_PATH=%BIN_PATH%\update
-)
-
-echo check for update
-IF EXIST %UPDATE_PATH% (
-  echo delete wyam for update
-  call del /F /S /Q %WYAM_PATH%
-  IF !ERRORLEVEL! NEQ 0 goto error
-
-  call del /F /S /Q %UPDATE_PATH%
-  IF !ERRORLEVEL! NEQ 0 goto error
-)
-
 
 IF EXIST %WYAM_PATH%\wyam.exe (
   SET WYAM_CMD=%WYAM_PATH%\wyam.exe
 )
 
+
+                                                                                                                                            
+echo 88                                               88  88     I8,        8        ,8I                                                         
+echo ""                            ,d                 88  88     `8b       d8b       d8'                                                         
+echo                               88                 88  88      "8,     ,8"8,     ,8"                                                          
+echo 88  8b,dPPYba,   ,adPPYba,  MM88MMM  ,adPPYYba,  88  88       Y8     8P Y8     8P  ,adPPYYba,  8b       d8  ,adPPYYba,  88,dPYba,,adPYba,   
+echo 88  88P'   `"8a  I8[    ""    88     ""     `Y8  88  88       `8b   d8' `8b   d8'  ""     `Y8  `8b     d8'  ""     `Y8  88P'   "88"    "8a  
+echo 88  88       88   `"Y8ba,     88     ,adPPPPP88  88  88        `8a a8'   `8a a8'   ,adPPPPP88   `8b   d8'   ,adPPPPP88  88      88      88  
+echo 88  88       88  aa    ]8I    88,    88,    ,88  88  88         `8a8'     `8a8'    88,    ,88    `8b,d8'    88,    ,88  88      88      88  
+echo 88  88       88  `"YbbdP"'    "Y888  `"8bbdP"Y8  88  88          `8'       `8'     `"8bbdP"Y8      Y88'     `"8bbdP"Y8  88      88      88  
+echo                                                                                                   d8'                                      
+echo                                                                                                  d8'                                       
+
+:: " 
+
+powershell -ExecutionPolicy RemoteSigned .\deploy.ps1
+
 IF NOT DEFINED WYAM_CMD (
-  :: Install wyam
-  echo Installing Wyam
-
-  IF EXIST %WYAM_SOURCE% (
-    echo Deleting old Source
-    call del /F /S /Q %WYAM_SOURCE%\*
-    IF !ERRORLEVEL! NEQ 0 goto error
-    IF EXIST %WYAM_SOURCE% (
-      echo faild deliting
-    )
-  )
-
-  
-
-                                                                                 
-                                                                                 
-  echo 88d8b.d8b. .d8888b. dP   .dP .d8888b.    dP  dP  dP dP    dP .d8888b. 88d8b.d8b. 
-  echo 88'`88'`88 88'  `88 88   d8' 88ooood8    88  88  88 88    88 88'  `88 88'`88'`88 
-  echo 88  88  88 88.  .88 88 .88'  88.  ...    88.88b.88' 88.  .88 88.  .88 88  88  88 
-  echo dP  dP  dP `88888P' 8888P'   `88888P'    8888P Y8P  `8888P88 `88888P8 dP  dP  dP 
-  echo ooooooooooooooooooooooooooooooooooooooooooooooooooooo~~~~.88~oooooooooooooooooooo
-  echo                                                      d8888P                      
-
-  ::call move %WYAM_SOURCE%\Wyam\bin\Debug\* %WYAM_PATH%
-  ::IF !ERRORLEVEL! NEQ 0 goto error
-
-  Write-Hoste Blub
-
-
   SET WYAM_CMD=%WYAM_PATH%\wyam.exe
 )
 
@@ -162,7 +127,7 @@ echo 88.  .88 88.  ... 88 88.  ...   88   88.  ...    88.  .88 88         88   8
 echo `88888P8 `88888P' dP `88888P'   dP   `88888P'    `88888P8 dP         dP   `88888P' dP     `88888P8 `88888P'   dP   `88888P' 
 echo oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 echo                                                                                                                             
-
+::"
 call del /F /S /Q %DEPLOYMENT_TEMP%
 IF !ERRORLEVEL! NEQ 0 goto error
 
